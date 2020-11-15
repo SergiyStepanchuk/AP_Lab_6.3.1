@@ -59,4 +59,6 @@ void main() {
 	draw_mass(mass, n, c_space);
 	cout << "max: " << max_(mass, n) << endl;
 	cout << "max tmpl: " << max__<int>(mass, n) << endl;
+
+	delete[] mass;
 }
