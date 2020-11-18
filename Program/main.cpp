@@ -8,6 +8,8 @@ void draw_line(int size, const char& c = '-') {
 	cout << endl;
 }
 
+// 1 funcs
+
 int myrand(const int& min, const int& max) {
 	return min > 0 ?
 		rand() % (max - min + 1) + min :
@@ -35,8 +37,32 @@ int max_(int* mass, int size) {
 	return mass[max_i];
 }
 
+// 2 tmpl func
+
+template <typename T>
+T myrand_(const T& min, const T& max) {
+	return (T)(min > 0 ?
+		rand() % (max - min + 1) + min :
+		rand() % (abs(min) + max + 1) + min);
+}
+
+template <typename T>
+void full_mass_(T* mass, int size, const T* dia) {
+	for (--size; size >= 0; size--)
+		mass[size] = myrand_(dia[0], dia[1]);
+}
+
+template <typename T>
+void draw_mass_(const T* mass, const int& size, const int& c_space) {
+	draw_line(size * c_space + 2);
+	for (int i = 0; i < size; i++)
+		cout << "|" << setw(c_space - 1) << mass[i];
+	cout << " |" << endl;
+	draw_line(size * c_space + 2);
+}
+
 template < typename T >
-T max__(T* mass, T size) {
+T max__(T* mass, int size) {
 	int max_i = 0;
 	for (--size; size > 0; --size)
 		if (mass[max_i] < mass[size])
@@ -55,9 +81,14 @@ void main() {
 
 	int* mass = new int[n];
 
+	cout << "1 // funcs" << endl;
 	full_mass(mass, n, dia);
 	draw_mass(mass, n, c_space);
 	cout << "max: " << max_(mass, n) << endl;
+
+	cout << "2 // tmpl funcs" << endl;
+	full_mass_(mass, n, dia);
+	draw_mass_(mass, n, c_space);
 	cout << "max tmpl: " << max__<int>(mass, n) << endl;
 
 	delete[] mass;
